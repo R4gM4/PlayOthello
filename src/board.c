@@ -1,6 +1,6 @@
 
 #include "board.h"
-#include "../utils.h"
+#include "utils.h"
 
 
 void initBoard(char board[BOARD_SIZE][BOARD_SIZE]) {

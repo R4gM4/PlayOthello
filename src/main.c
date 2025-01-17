@@ -1,8 +1,7 @@
 
 #include "board.h"
 #include "game.h"
-#include "../bdd/testdb.h"
-#include "../utils.h"
+#include "utils.h"
 #include "computer.h"
 #include "digraph.h"
 
@@ -33,7 +32,6 @@ int main() {
 
                 puts("L'IA réfléchit...");
 
-                // Trouver mouvement
                 int moveX = 0; 
                 int moveY = 0;
                 Board tempBoard;

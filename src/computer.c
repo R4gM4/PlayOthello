@@ -3,7 +3,7 @@
 #include "game.h"
 #include "board.h"
 #include "digraph.h"
-#include "../utils.h"
+#include "utils.h"
 
 
 // Nombre de pions dans game.h : calculateScore()
@@ -26,28 +26,36 @@ int nbCornBord(Board state) {
 	if (state.cells[0][BOARD_SIZE-1] == state.currentPlayer) a+=3;
 	if (state.cells[BOARD_SIZE-1][0] == state.currentPlayer) a+=3;
 	if (state.cells[BOARD_SIZE-1][BOARD_SIZE-1] == state.currentPlayer) a+=3;
+
 	for (int i=0; i < BOARD_SIZE; i++) {
+
 		if (state.cells[0][i] == state.currentPlayer) a+=3;
 		if (state.cells[i][0] == state.currentPlayer) a+=3;
 		if (state.cells[BOARD_SIZE-1][i] == state.currentPlayer) a+=3;
 		if (state.cells[i][BOARD_SIZE-1] == state.currentPlayer) a+=3;
 	}
+
 	return a;
 }
 
 
 int nbPosMoves(Board state) {
 	int a = 0;
+    
     for (int i = 0; i < BOARD_SIZE; i++) {
+        
         for (int j = 0; j < BOARD_SIZE; j++) {
+
             if (isValidMove(state.cells, i, j, state.currentPlayer)) a++;
         }
     }
+
     return a;
 }
 
 
 int maxCapture(Board state) {
+    (void)state;
 	// regarder tous les mouvements possibles
 	// les faire et les évaluer
 	return 0;
@@ -56,12 +64,17 @@ int maxCapture(Board state) {
 
 void generatePossibleMoves(Board *board, TreeNode *parent) {
     for (int x = 0; x < BOARD_SIZE; x++) {
+
         for (int y = 0; y < BOARD_SIZE; y++) {
-            // Crée une copie pour chaque mouvement valide et applique le mouvement
+
             if (isValidMove(board->cells, x, y, board->currentPlayer)) {
+
                 Board newBoard;
+                
                 memcpy(&newBoard, board, sizeof(Board));
+                
                 makeMove(newBoard.cells, x, y, newBoard.currentPlayer);
+                
                 newBoard.currentPlayer = (newBoard.currentPlayer == 'x') ? 'o' : 'x';
                 TreeNode *child = create_node(newBoard);
                 add_child(parent, child);
@@ -125,24 +138,20 @@ void playBestMove(TreeNode *root, int depth, bool isMaximizingPlayer) {
         generatePossibleMoves(&root->state, root);
     }
 
-    // Parcourt les enfants et applique l'algorithme alphabêta
     for (int i = 0; i < root->numChildren; i++) {
         int eval = alphabeta(root->children[i], depth - 1, !isMaximizingPlayer, INT_MIN, INT_MAX);
 
-        // L'ordinateur joue
         if (isMaximizingPlayer && eval > bestValue) {
             bestValue = eval;
             bestMove = root->children[i];
         }
 
-        // Là c'est toi qui joue
         if (!isMaximizingPlayer && eval < bestValue) {
             bestValue = eval;
             bestMove = root->children[i];
         }
     }
 
-    // Applique le meilleur mouvement trouvé
     if (bestMove != NULL) {
         memcpy(&root->state, &bestMove->state, sizeof(Board));
 

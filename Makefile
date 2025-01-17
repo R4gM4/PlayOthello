@@ -1,14 +1,14 @@
 CC = gcc
-CFLAGS = -Wall
-SRC_DIR = ..
+CFLAGS = -Wall -Wextra -fsanitize=address
+SRC_DIR = src
 OBJ_DIR = output
 TARGET = othello
 
-SRC_FILES = main.c \
-            board.c \
-            computer.c \
-            digraph.c \
-            game.c \
+SRC_FILES = $(SRC_DIR)/main.c \
+            $(SRC_DIR)/board.c \
+            $(SRC_DIR)/computer.c \
+            $(SRC_DIR)/digraph.c \
+            $(SRC_DIR)/game.c \
             $(SRC_DIR)/utils.c
 
 OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)

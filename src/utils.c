@@ -48,16 +48,12 @@ int findMin(int* arr, int size) {
 }
 
 
-void afficher_progressivement_texte(const wchar_t *texte, int delai_ms) {
+void afficher_progressivement_texte(const char* texte, int delai_ms) {
     while (*texte) {
-        wprintf(L"%lc", *texte);
+        printf("%c", *texte);
         fflush(stdout); 
-        #ifdef _WIN32
-            Sleep(delai_ms);
-        #else
-            usleep(delai_ms * 1000);
-        #endif
+        usleep(delai_ms * 1000);
         texte++; 
     }
-    wprintf(L"\n");
+    putchar('\n');
 }
