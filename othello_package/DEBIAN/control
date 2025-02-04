@@ -1,0 +1,7 @@
+Package: othello
+Version: 1.0
+Section: games
+Priority: optional
+Architecture: amd64
+Maintainer: Rageade Mathys <mathys.rageade.nsi@gmail.com>
+Description: Un jeu Othello en ligne de commande
